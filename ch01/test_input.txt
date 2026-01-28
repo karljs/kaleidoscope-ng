@@ -1,0 +1,12 @@
+def # this is a function definition
+extern # external function
+myIdentifier # a test identifier
+test_var # another identifier
+café
+日本語 # unicode identifier
+123 # integer
+45.67 # decimal
+19.25
+@ # unknown token
+# this entire line is a comment
+def # comment at end

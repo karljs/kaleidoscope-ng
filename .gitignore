@@ -1,0 +1,12 @@
+build/
+*.o
+*.a
+*.so
+*.dylib
+.cache/
+.vs/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
