@@ -14,21 +14,19 @@ Lexer::Lexer() {
     std::wcin.imbue(std::locale());
 }
 
-std::expected<Token, UnknownToken> Lexer::getToken() const {
-    int position = 0;
-    
-    auto skip_while = [&position](auto predicate) {
+std::expected<Token, UnknownToken> Lexer::getToken() {
+    auto skip_while = [this](auto predicate) {
         wint_t c;
         while ((c = std::wcin.peek()) != WEOF && predicate(c)) {
             std::wcin.get();
-            position++;
+            current_position++;
         }
     };
 
-    auto consume = [&position]() -> wint_t {
+    auto consume = [this]() -> wint_t {
         auto c = std::wcin.get();
         if (c != WEOF)
-            position++;
+            current_position++;
         return c;
     };
 
@@ -78,5 +76,5 @@ std::expected<Token, UnknownToken> Lexer::getToken() const {
         return Token{TokenType::IDENTIFIER, std::move(identifier)};
     }
 
-    return std::unexpected(UnknownToken{std::wstring(1, c), position});
+    return std::unexpected(UnknownToken{std::wstring(1, c), current_position});
 }

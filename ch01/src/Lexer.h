@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <expected>
 #include <string>
 #include <variant>
@@ -20,11 +21,14 @@ struct Token {
 
 struct UnknownToken {
     std::wstring unknown_token;
-    int position;
+    std::size_t position;
 };
 
 class Lexer {
   public:
     Lexer();
-    std::expected<Token, UnknownToken> getToken() const;
+    std::expected<Token, UnknownToken> getToken();
+
+  private:
+    std::size_t current_position = 0;
 };
