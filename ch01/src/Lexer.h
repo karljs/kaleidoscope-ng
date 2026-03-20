@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <expected>
 #include <string>
+#include <utf8proc.h>
 #include <variant>
 
 enum class TokenType {
@@ -16,19 +17,23 @@ enum class TokenType {
 
 struct Token {
     TokenType type;
-    std::variant<std::wstring, double> data;
+    std::variant<std::string, double> data;
 };
 
 struct UnknownToken {
-    std::wstring unknown_token;
+    std::string unknown_token;
     std::size_t position;
 };
 
 class Lexer {
   public:
-    Lexer();
+    explicit Lexer(std::string source);
     std::expected<Token, UnknownToken> getToken();
 
   private:
-    std::size_t current_position = 0;
+    utf8proc_int32_t peek_codepoint() const;
+    utf8proc_int32_t consume_codepoint();
+
+    std::string source_;
+    std::size_t byte_pos_ = 0;
 };
