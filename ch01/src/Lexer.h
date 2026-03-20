@@ -26,11 +26,11 @@ struct UnknownToken {
 };
 
 class Lexer {
-  public:
+public:
     explicit Lexer(std::string source);
     std::expected<Token, UnknownToken> getToken();
 
-  private:
+private:
     utf8proc_int32_t peek_codepoint() const;
     utf8proc_int32_t consume_codepoint();
 
